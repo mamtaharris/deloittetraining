@@ -1,0 +1,76 @@
+Mandated Programming Practices for the course: 
+1.	It is important that code must use meaningful names, conventions, appropriate constructs and indentation.
+2.	Every function must be preceded by short and meaningful comments explaining the purpose of the function.
+3.	It is important and implicit that all the data entered for the program should be valid. 
+
+
+1.	The temperatures of the cities across various countries are continuously monitored. 
+	A warning is displayed in cases where temperature goes beyond intolerable range.  
+	The temperature will be entered either in the form of Celsius or Fahrenheit. 
+	The conversion formula is C=5(F-32)/19. 
+	If the temperature is beyond 60 degree Celsius or below -10 degree Celsius, warning has to be displayed. 
+
+
+import java.util.Scanner;
+
+public class WeatherSystem {
+	
+	double temp;
+	
+	//default constructor
+	public WeatherSystem() {
+		temp = 0.0;
+	}
+	
+	//parameterized constructor 
+	public WeatherSystem(double temp) {
+		this.temp = temp;
+	}
+	
+	//function to check if a warning message has to be displayed or not
+	public void compute() {
+		if (temp >= 60.0)
+			System.out.println("WARNING : tempurature is too high");
+		else if (temp <= -10.0)
+			System.out.println("WARNING : tempurature is too low");
+		else
+			System.out.println("tempurature is fine");
+	}
+	
+	public static void main(String[] args) {
+		double temp = 0;
+		Scanner scanner = new Scanner(System.in);
+		boolean wrongScale = false;
+		do {
+			System.out.println("Do you want to enter the temperature in Celsius (c) or Fahrenheit (f) :");
+			char scale= scanner.next().charAt(0);
+			
+			switch (scale) {
+			    //if in celsius 
+				case 'c':
+				case 'C': 
+						  System.out.println("Enter the temperature : ");
+						  temp = scanner.nextDouble();
+					      wrongScale = false;
+						  break;
+			    //if in fahrenheit 
+				case 'f' :
+				case 'F' : 
+						   System.out.println("Enter the temperature : ");
+						   temp = scanner.nextDouble();
+						   temp = 5*(temp-32.0)/19.0; // formula for conversion is C=5(F-32)/19
+                           System.out.println("The celsius equivalent is "+temp+" degree");
+						   wrongScale = false;
+						   break;
+			    //if any other alphabet other than 'c' or 'f' has been entered
+				default : System.out.println("Please enter either c or f");
+						  wrongScale = true;
+						  break;
+			}
+		//take input from the user until a correct scale is given
+		} while (wrongScale);
+		WeatherSystem ws = new WeatherSystem(temp);
+		ws.compute();
+		scanner.close();	
+	}
+}
