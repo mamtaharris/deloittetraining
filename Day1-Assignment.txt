@@ -1,0 +1,90 @@
+Create a table called Employee with the following Columns  and perform the following operations:-
+------------------------------------------------------------------------------------------------------------
+
+EmployeeID    
+EmployeeName   
+EmployeeAddress : 
+DOB
+DOJ
+Salary
+
+solution :
+
+ create table Employee
+  2  (
+  3  EmployeeID varchar(10) constraint primarykey primary key,
+  4  EmployeeName varchar(10) constraint empname not null,
+  5  EmployeeAdrress varchar(10),
+  6  DOB date,
+  7  DOJ date,
+  8  Salary number(10)
+  9  );
+
+
+a.) Insert five records
+
+insert into Employee values ('1', 'aaa', 'chennai', '26-march-1996', '06-may-2017', 50000);
+insert into Employee values ('2', 'bbb', 'chennai', '23-june-1996', '26-may-2017', 50000);
+insert into Employee values ('3', 'ccc', 'bangalore', '03-july-1996', '02-june-2017', 15000);
+insert into Employee values ('4', 'ddd', 'goa', '17-june-1996', '07-may-2017', 3000);
+insert into Employee values ('5', 'eee', 'bangalore', '23-december-1996', '06-april-2017', 5000);
+
+b) Retrieve all the records
+
+select * from Employee;
+
+EMPLOYEEID EMPLOYEENA EMPLOYEEAD DOB       DOJ           SALARY
+---------- ---------- ---------- --------- --------- ----------
+1          aaa        chennai    26-MAR-96 06-MAY-17      50000
+2          bbb        chennai    23-JUN-96 26-MAY-17      50000
+3          ccc        bangalore  03-JUL-96 02-JUN-17      15000
+4          ddd        goa        17-JUN-96 07-MAY-17       3000
+5          eee        bangalore  23-DEC-96 06-APR-17       5000
+
+c) Retrieve the Employee name whose salary is greater than 20000
+
+select EmployeeName from Employee where salary > 20000;
+
+EMPLOYEENA
+----------
+aaa
+bbb
+
+d) Retrieve the Employee name whose address contains 'a' or 'p' or 'r'  as the last character
+
+select EmployeeName from Employee where EmployeeAdrress like '%a' or EmployeeAdrress like '%p' or EmployeeAdrress like '%r';
+
+EMPLOYEENA
+----------
+ddd
+ 
+e) Increase the Salary of all the Employee by 20%
+
+SQL> update Employee set salary = salary+salary*0.2;
+
+5 rows updated.
+
+SQL> select * from Employee;
+
+EMPLOYEEID EMPLOYEENA EMPLOYEEAD DOB       DOJ           SALARY
+---------- ---------- ---------- --------- --------- ----------
+1          aaa        chennai    26-MAR-96 06-MAY-17      60000
+2          bbb        chennai    23-JUN-96 26-MAY-17      60000
+3          ccc        bangalore  03-JUL-96 02-JUN-17      18000
+4          ddd        goa        17-JUN-96 07-MAY-17       3600
+5          eee        bangalore  23-DEC-96 06-APR-17       6000
+
+f) Delete all the employee records whose salary is less than 5000
+
+SQL> delete from Employee where salary < 5000;
+
+1 row deleted.
+
+SQL> select * from Employee;
+
+EMPLOYEEID EMPLOYEENA EMPLOYEEAD DOB       DOJ           SALARY
+---------- ---------- ---------- --------- --------- ----------
+1          aaa        chennai    26-MAR-96 06-MAY-17      60000
+2          bbb        chennai    23-JUN-96 26-MAY-17      60000
+3          ccc        bangalore  03-JUL-96 02-JUN-17      18000
+5          eee        bangalore  23-DEC-96 06-APR-17       6000
