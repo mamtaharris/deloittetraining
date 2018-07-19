@@ -1,0 +1,128 @@
+select table_name from user_tables;
+
+TABLE_NAME
+------------------------------
+PEOPLE
+PERSONS
+SALGRADE
+BONUS
+EMP
+DEPT
+  
+
+***** TABLE 1 *****
+create table People (Lastname varchar(10), Firstname varchar(10), Address varchar(10), City varchar(10));
+
+insert into People values ('Kapoor', 'Isha', 'BTM', 'Bangalore');
+insert into People values ('Singh', 'Ravish', 'BTM', 'Bangalore');
+insert into People values ('Sharma', 'Neha', 'Marathalli', 'Bangalore');
+select * from People;
+
+LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ----------
+Kapoor     Isha       BTM        Bangalore
+Singh      Ravish     BTM        Bangalore
+Sharma     Neha       Marathalli Bangalore
+
+insert into People values ('Kapoor', 'Anu', 'Dwarka', 'Delhi');
+insert into People (Firstname) values ('Anu');
+
+select * from People;
+
+LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ----------
+Kapoor     Isha       BTM        Bangalore
+Singh      Ravish     BTM        Bangalore
+Sharma     Neha       Marathalli Bangalore
+Kapoor     Anu        Dwarka     Delhi
+           Anu
+
+select * from People where Address = 'BTM';
+
+LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ----------
+Kapoor     Isha       BTM        Bangalore
+Singh      Ravish     BTM        Bangalore
+
+update People set Firstname='Girish' where Firstname='Anu' and Lastname='Kapoor';
+
+select * from People;
+
+LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ----------
+Kapoor     Isha       BTM        Bangalore
+Singh      Ravish     BTM        Bangalore
+Sharma     Neha       Marathalli Bangalore
+Kapoor     Girish     Dwarka     Delhi
+	   Anu
+
+select nvl(Lastname, '-') from People;
+
+NVL(LASTNA
+----------
+Kapoor
+Singh
+Sharma
+Kapoor
+-
+
+
+
+***** TABLE 2 *****
+create table Students (sid char(5), sname varchar(10), dob date, doj date);
+
+insert into Students values ('1', 'a', '26-march-1996', '06-september-2017');
+insert into Students values ('2', 'b', '26-march-1996', '06-september-2017');        
+insert into Students values ('3', 'c', '26-march-1996', '06-september-2017');
+
+select *  from Students;
+
+SID   SNAME      DOB       DOJ
+----- ---------- --------- ---------
+1     a          26-MAR-96 06-SEP-17
+2     b          26-MAR-96 06-SEP-17
+3     c          26-MAR-96 06-SEP-17
+
+select round(months_between(sysdate, dob)/12) from Students;
+
+ROUND(MONTHS_BETWEEN(SYSDATE,DOB)/12)
+-------------------------------------
+                                   22
+                                   22
+                                   22
+
+
+
+***** TABLE 3 *****
+
+create table Student (
+    roll varchar(10) primary key,
+    name varchar(10) not null,
+    addr varchar(10) CHECK (addr in ('chennai', 'mumbai', 'kolkata')),
+    marks number CHECK (marks between 0 and 100)
+    );
+
+insert into Student values('1', 'a', 'chennai', 79);
+insert into Student values('2', 'b', 'chennai', 79);
+insert into Student values('2', 'c', 'kolkata', 79)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0011071) violated
+
+
+
+***** TABLE 4 *****
+
+create table Student (
+    roll varchar(10) CONSTRAINT rollprimary primary key,
+    name varchar(10) CONSTRAINT name not null,
+    addr varchar(10) CONSTRAINT addr check (addr in ('chennai', 'mumbai', 'kolkata')),
+    marks number CONSTRAINT marks check (marks between 0 and 100)
+    );
+
+insert into Student values('1', 'a', 'chennai', 79);
+insert into Student values('2', 'b', 'chennai', 79);
+insert into Student values('2', 'c', 'kolkata', 79)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.ROLLPRIMARY) violated
