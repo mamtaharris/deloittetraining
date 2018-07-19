@@ -1,0 +1,25 @@
+
+*****OBJECTS AND VARIABLES*****
+
+public class Demo {
+	int num1=10,num2=20;
+	public Demo(int num1,int num2) {
+			this.num1 = num2;
+			num2 = num1;
+	}
+	public void changeValues(int num1,Demo demo) {
+		this.num1++;
+		demo.num2 = --num1;
+		demo.num2 = this.num1++;
+		System.out.println(num1+this.num1+this.num2+demo.num1);
+	}
+	 public static void main(String[] args) 
+	{
+		 	int num1=100;int num2=200;
+		 	Demo demo = new Demo(100,200);
+		 	demo.changeValues(num1, demo);
+		 	System.out.println(num1+num2+demo.num1+demo.num2);
+	}
+}
+
+  0hjdddddddddddddd cgd   
