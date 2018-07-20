@@ -1,0 +1,37 @@
+*****CREATING OWN EXCEPTIONS*****
+
+package exceptions;
+public class InvalidAgeException extends RuntimeException{
+	public InvalidAgeException() {
+	}
+	public InvalidAgeException(String message) {
+		super(message);
+	}
+}
+
+
+//Default package has
+
+import java.util.Scanner;
+import exceptions.InvalidAgeException;
+
+public class CheckAge {
+	public static void main(String[] args) {
+		System.out.println("Enter age :");
+		Scanner scanner = new Scanner(System.in);
+		int age = scanner.nextInt();
+		
+		try {
+			if (age < 0) {
+				throw new InvalidAgeException("Negative age not allowed");	
+			}
+		} catch (InvalidAgeException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("Hello");
+		scanner.close();
+	}
+}
+
+**********
