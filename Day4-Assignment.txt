@@ -142,6 +142,8 @@ public class Calculator {
 				break;
 			default:
 				inputAgain = true;
+				calculator.n1flag = false;
+				calculator.n2flag = false;
 				System.out.println("Invalid choice");
 				calculator.input(calculator);
 			}
