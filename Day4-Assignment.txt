@@ -1,0 +1,226 @@
+Exercise Objective(s): Overloading
+
+Exercise: Create a class called Calculator which has 4 different methods add, diff, 
+mul and div that accept two numbers as parameters. 
+Overload the methods such that the parameters can be of the following pattern. 
+a)	Both are of int data type. 
+b)	Both are of double data type. 
+c)	First parameter is of int data type and second parameter is of double data type. 
+d)	First parameter is of double data type and second parameter is of int data type
+
+
+     Create an object to access these methods and invoke these methods with different
+     type of numbers and display the result in the corresponding methods. 
+
+
+import java.util.Scanner;
+
+public class Calculator {
+	
+	int choice; 
+	int n1int, n2int;
+	double n1double, n2double;
+	boolean n1flag, n2flag;
+	
+	public Calculator() {
+		super();
+		n1int=0;
+		n2int=0;
+		n1double=0.0;
+		n2double=0.0;
+		n1flag=false;
+		n2flag=false;
+	}
+
+	public int getN1int() {
+		return n1int;
+	}
+
+	public void setN1int(int n1int) {
+		this.n1int = n1int;
+	}
+
+	public int getN2int() {
+		return n2int;
+	}
+
+	public void setN2int(int n2int) {
+		this.n2int = n2int;
+	}
+
+	public double getN1double() {
+		return n1double;
+	}
+
+	public void setN1double(double n1double) {
+		this.n1double = n1double;
+	}
+
+	public double getN2double() {
+		return n2double;
+	}
+
+	public void setN2double(double n2double) {
+		this.n2double = n2double;
+	}
+
+	public int getChoice() {
+		return choice;
+	}
+
+	public void setChoice(int choice) {
+		this.choice = choice;
+	}
+
+	public void input(Calculator calculator) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("What operation do you want to perform? \n1. Addition2. Subtraction\n3. Multiplication\n4.Division");
+		setChoice(scanner.nextInt());
+		System.out.print("Number 1 : ");
+		 calculator.setN1double( scanner.nextDouble() );
+		 if ( calculator.n1double == Math.floor(calculator.n1double) ) {
+			 calculator.setN1int((int)calculator.n1double);
+			 calculator.n1flag = true;
+		 }
+		 System.out.print("Number 2 : ");
+		 calculator.setN2double( scanner.nextDouble() );
+		 if ( calculator.n2double == Math.floor(calculator.n2double) ) {
+			 calculator.setN2int((int)calculator.n2double);
+			 calculator.n2flag = true;
+		 }
+	}
+	
+	public static void main(String[] args) {
+		Calculator calculator = new Calculator();
+		calculator.input(calculator);
+		boolean inputAgain = false;
+		do {
+			switch(calculator.choice) {
+			case 1 :  
+				inputAgain = false;
+				if(calculator.n1flag && calculator.n2flag)
+					add(calculator.n1int, calculator.n2int);
+				else if(calculator.n1flag && !calculator.n2flag)
+					add(calculator.n1int, calculator.n2double);
+				else if(!calculator.n1flag && calculator.n2flag)
+					add(calculator.n1double, calculator.n2int);
+				else
+					add(calculator.n1double, calculator.n2double);
+				break;
+			case 2 :  
+				inputAgain = false;
+				if(calculator.n1flag && calculator.n2flag)
+					sub(calculator.n1int, calculator.n2int);
+				else if(calculator.n1flag && !calculator.n2flag)
+					sub(calculator.n1int, calculator.n2double);
+				else if(!calculator.n1flag && calculator.n2flag)
+					sub(calculator.n1double, calculator.n2int);
+				else
+					sub(calculator.n1double, calculator.n2double);
+				break;
+			case 3 :  
+				inputAgain = false;
+				if(calculator.n1flag && calculator.n2flag)
+					mul(calculator.n1int, calculator.n2int);
+				else if(calculator.n1flag && !calculator.n2flag)
+					mul(calculator.n1int, calculator.n2double);
+				else if(!calculator.n1flag && calculator.n2flag)
+					mul(calculator.n1double, calculator.n2int);
+				else
+					mul(calculator.n1double, calculator.n2double);
+				break;
+			case 4 : 
+				inputAgain = false;
+				if(calculator.n1flag && calculator.n2flag)
+					div(calculator.n1int, calculator.n2int);
+				else if(calculator.n1flag && !calculator.n2flag)
+					div(calculator.n1int, calculator.n2double);
+				else if(!calculator.n1flag && calculator.n2flag)
+					div(calculator.n1double, calculator.n2int);
+				else
+					div(calculator.n1double, calculator.n2double);
+				break;
+			default:
+				inputAgain = true;
+				System.out.println("Invalid choice");
+				calculator.input(calculator);
+			}
+		} while (inputAgain);
+	}
+
+	private static void div(double n1double2, double n2double2) {
+		if( n2double2 == 0.0)
+			System.out.println("Divide by zero error");
+		else 
+			System.out.println("Division of two doubles is "+(n1double2 / n2double2));
+	}	
+
+	private static void div(double n1double2, int n2int2) {
+		if( n2int2 == 0)
+			System.out.println("Divide by zero error");
+		else 
+			System.out.println("Division of a double and an integer is "+(n1double2 / n2int2));
+	}
+
+	private static void div(int n1int2, double n2double2) {
+		if( n2double2 == 0.0)
+			System.out.println("Divide by zero error");
+		else 
+			System.out.println("Division of an integer and a double is "+(n1int2 / n2double2));
+	}
+
+	private static void div(int n1int2, int n2int2) {
+		if( n2int2 == 0)
+			System.out.println("Divide by zero error");
+		else 
+			System.out.println("Division of two integers is "+(n1int2 / n2int2));
+	}
+
+	private static void mul(double n1double2, double n2double2) {
+		System.out.println("Multiplication of two doubles is "+(n1double2 * n2double2));
+	}
+
+	private static void mul(double n1double2, int n2int2) {
+		System.out.println("Multiplication of a double and an integer is "+(n1double2 * n2int2));
+	}
+
+	private static void mul(int n1int2, double n2double2) {
+		System.out.println("Multiplication of an integer and a double is "+(n1int2 * n2double2));
+	}
+
+	private static void mul(int n1int2, int n2int2) {
+		System.out.println("Multiplication of two integers is "+(n1int2 * n2int2));
+	}
+
+	private static void sub(double n1double2, double n2double2) {
+		System.out.println("Subtraction of two doubles is "+(n1double2 - n2double2));
+	}
+
+	private static void sub(double n1double2, int n2int2) {
+		System.out.println("Subtraction of a double and an integer is "+(n1double2 - n2int2));
+	}
+
+	private static void sub(int n1int2, double n2double2) {
+		System.out.println("Subtraction of an integer and a double is "+(n1int2 - n2double2));
+	}
+
+	private static void sub(int n1int2, int n2int2) {
+		System.out.println("Subtraction of two integers is "+(n1int2 - n2int2));
+	}
+
+	private static void add(double n1double2, double n2double2) {
+		System.out.println("Addition of two doubles is "+(n1double2 + n2double2));
+	}
+
+	private static void add(double n1double2, int n2int2) {
+		System.out.println("Addition of a double and an integer is "+(n1double2 + n2int2));
+	}
+
+	private static void add(int n1int2, double n2double2) {
+		System.out.println("Addition of an integer and a double is "+(n1int2 + n2double2));
+	}
+
+	private static void add(int n1int2, int n2int2) {
+		System.out.println("Addition of two integers is "+(n1int2 + n2int2));
+	}
+}
