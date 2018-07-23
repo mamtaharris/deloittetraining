@@ -1,0 +1,60 @@
+using interface constants
+
+Exercise:
+?	A scientific application needs to use several constants through out the application. 
+It was decided to create an interface called PhysicalConstants. 
+The constants that needs to be set are 
+?	Speed of light in vacuum (C):299 792 458 m/s
+?	Gravitational constant (G): 6.674 28×10-11 m3 kg-1 s-2
+?	Standard Gravitational Acceleration(g) : 9.806 65 m/s2
+?	Use these constants for a class that has following functions. 
+?	E= MC2
+?	F=G (m1  m2)/r2
+?	d=0.5 gt
+Make sure that constants names are used without repeating interface names with constants.
+Recommended duration: 30 Mins
+
+Exercise Objective(s): Overriding Object class methods
+
+---------------------
+
+public interface PhysicalConstants {
+	final double C = 299792458.0;
+	final double G = 6.67428 * Math.pow(10, -11);
+	final double g = 9.80665;
+}
+
+----------------------
+
+import java.util.Scanner;
+
+public class Implementation implements PhysicalConstants {
+	public double E(double M) {
+		return (M*C*C);
+	}
+	
+	public double F(double m1, double m2, double r) {
+		return (G*((m1*m2)/(r*r)));
+	}
+	
+	public double d(double t) {
+		return (0.5*g*t);
+	}
+	
+	public static void main(String[] args) {
+		Implementation i = new Implementation();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter M : ");
+		double M = sc.nextDouble();
+		System.out.println("E = M * C^2 = "+i.E(M));
+		System.out.println("Enter m1, m2 and r :");
+		double m1 = sc.nextDouble();
+		double m2 = sc.nextDouble();
+		double r = sc.nextDouble();
+		System.out.println("F = G * ((m1*m2)/(r*r)) = "+i.F(m1, m2, r));
+		System.out.println("Enter t : ");
+		double t = sc.nextDouble();
+		System.out.println("d = 0.5 * g * t = "+i.d(t));
+		sc.close();
+	}
+}
