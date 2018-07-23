@@ -5,3 +5,84 @@ salary and so on, if the object is printed automatically the details must be pri
 Also two workers are same if their names are same. Therefore before printing salary report, 
 a check needs to made to see if duplicate workers have been entered. 
 If so, the duplicates must be removed from the list. 
+
+
+
+public class Worker {
+	String name;
+	double salary;
+	
+	public Worker(String name, double salary) {
+		super();
+		this.name = name;
+		this.salary = salary;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public double getSalary() {
+		return salary;
+	}
+	
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Worker other = (Worker) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Worker [name=" + name + ", salary=" + salary + "]";
+	}
+}
+
+
+
+public class PrintWorkerDetails {
+	public static void main(String[] args) {
+		
+		Worker w1 = new Worker("aaa", 10000.0);
+		Worker w2 = new Worker("bbb", 10000.0);
+		Worker w3 = new Worker("aaa", 10000.0);
+	
+		System.out.println(w1);
+		System.out.println(w2);
+		System.out.println(w3);
+		
+		System.out.println("\nSalary details :");
+		System.out.println(w1);
+		if (!w2.equals(w1))
+			System.out.println(w2);
+		if (!w3.equals(w2) && !w3.equals(w1))
+				System.out.println(w3);
+	}
+}
