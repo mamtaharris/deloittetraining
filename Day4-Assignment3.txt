@@ -1,0 +1,7 @@
+Exercise:
+
+In the worker exercise, instead of printing individual attributes like name, 
+salary and so on, if the object is printed automatically the details must be printed. 
+Also two workers are same if their names are same. Therefore before printing salary report, 
+a check needs to made to see if duplicate workers have been entered. 
+If so, the duplicates must be removed from the list. 
