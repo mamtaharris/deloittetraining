@@ -1,0 +1,95 @@
+--------------INNER CLASS--------------------
+
+
+public class OuterClass {
+	String password = "blahblah";
+	private class InnerClass {
+		public void changePassword() {
+			password = "changedblah";
+		}
+	}
+	public void change() {
+		InnerClass in = new InnerClass();
+		in.changePassword();
+		System.out.println(password);
+	}
+}
+
+
+public class AnotherClass {
+	public static void main(String[] args) {
+		OuterClass ou = new OuterClass(); 
+		ou.change();
+	}
+}  
+
+---------------GENERIC CLASS-------------------
+
+
+public class GenericClassDemo {
+	public static <T> void display ( T t ) {
+		System.out.println(t);
+	}
+	public static void main(String[] args) {
+		display(1);
+		display("aaa");
+	}
+}
+
+-----------------MAPS-------------------------
+
+import java.util.*;
+import java.util.Map.Entry;
+
+public class MapDemo {
+	public static void main(String[] args) {
+		TreeMap<String, Integer> tm = new TreeMap<String, Integer>();
+		
+		tm.put("a", 10);
+		tm.put("b", 15);
+		tm.put("c", 20);
+		tm.put("d", 13);
+		tm.put("e", 10);
+		
+		Set<Entry<String, Integer>> set = tm.entrySet();
+		Iterator<Entry<String, Integer>> i = set.iterator();
+		
+		while(i.hasNext()) {
+			Map.Entry me = (Map.Entry)i.next();
+			System.out.println(me.getKey());
+			System.out.println(me.getValue());
+		}
+				
+
+	}
+}
+
+------------------THREADS---------------------------------
+
+class Print {
+	public static synchronized void p (String n, String m) {
+		System.out.println(n);
+		System.out.println(m);
+	}
+}
+
+public class ThreadDemo extends Thread {
+	String n, m;
+	public ThreadDemo(String n, String m) {
+		this.n=n;
+		this.m=m;
+		start();
+	}
+	@Override
+	public void run() {
+		Print.p(n, m);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("main"); 
+		new ThreadDemo("n1", "m1");
+		new ThreadDemo("n2", "m2");
+		new ThreadDemo("n3", "m3");
+		new ThreadDemo("n4", "m4");
+	}
+}
