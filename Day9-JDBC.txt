@@ -1,0 +1,219 @@
+//A CLASS FOR CONNECTING TO DB (EASY METHOD)                                 
+                                                                               
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class MyConnection {
+	public static Connection getConnection () {
+		Connection connection = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		}
+		catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Driver Loaded");
+
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "scott", "tiger");
+			/*
+			 *where jdbc is the API, oracle is the database, thin is the driver, localhost is the server name 
+			 *on which oracle is running, we may also use IP address, 1521 is the port number 
+			 *and orcl is the Oracle service name
+			 */
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		System.out.println("Connected");
+		return connection;
+	}
+}
+
+-------------------------------------------------------------------------
+//SELECTION 
+
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SelectRecord {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		Connection connection = MyConnection.getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM STUDENT");
+		
+		while(rs.next()) {
+			System.out.println(rs.getString(1)+"\t"+rs.getString(2));
+		}
+		connection.close();
+	}
+}
+
+------------------------------------------------------------------------
+//INSERTION
+
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class InsertRecord {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		Connection connection = MyConnection.getConnection();
+		Statement statement = connection.createStatement();
+		int rowsAffected = statement.executeUpdate("insert into student values(1, 'aaa')");
+		System.out.println(rowsAffected);
+		connection.close();
+	}
+}
+
+-------------------------------------------------------------------------
+//PREPARED STATEMENT
+
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class InsertPreparedStatement {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		Connection connection = MyConnection.getConnection();
+		PreparedStatement statement = connection.prepareStatement("insert into student values(?, ?)");
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter roll number : ");
+		statement.setInt(1, scanner.nextInt());
+		System.out.println("Enter name : ");
+		statement.setString(2, scanner.next());
+		statement.executeUpdate();
+		scanner.close();
+		connection.close();
+	}
+}
+
+--------------------------------------------------------------------------
+//COMMIT AND ROLLBACK
+
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class CommitRollback {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		Connection connection = MyConnection.getConnection();
+		PreparedStatement statement = null;
+		Scanner scanner = new Scanner(System.in);
+
+		connection.setAutoCommit(false);
+		try {
+			int i = 0;
+			while (i++ < 3) {
+				statement = connection.prepareStatement("insert into student values(?, ?)");
+				System.out.println("Enter roll number : ");
+				statement.setInt(1, scanner.nextInt());
+				System.out.println("Enter name : ");
+				statement.setString(2, scanner.next());
+				 statement.executeUpdate();
+			}
+			connection.commit();
+		} catch (Exception e) {
+			connection.rollback();
+		}
+		connection.close();
+		scanner.close();
+	}
+}
+
+-----------------------------------------------------------------------------
+//BATCH
+
+package com.javatraining.jdbc;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Batch {
+	public static void main(String[] args) throws SQLException {
+		Connection connection = MyConnection.getConnection();
+		connection.setAutoCommit(false);
+		Statement statement = connection.createStatement();
+		try {
+			statement.addBatch("insert into student values (100, 'a')");
+			statement.addBatch("insert into student values (200, 'b')");
+			statement.addBatch("insert into student values (300, 'c')");
+			statement.addBatch("insert into student values (400, 'd')");
+			statement.executeBatch();
+			connection.commit();
+		} catch (Exception e) {
+			connection.rollback();
+		}
+	}
+}
+
+-------------------------------------------------------------------------------
+//CALLABLESTATEMENT
+
+/*  CREATE OR REPLACE PROCEDURE FIRSTPROC
+ * 2  (
+ * 3  ID IN NUMBER,
+ * 4  NAME IN VARCHAR2
+ * 5  )
+ * 6  IS
+ * 7  BEGIN
+ * 8  INSERT INTO STUDENT VALUES (ID, NAME);
+ * 9  END;
+ * 10  /
+ */
+
+
+package com.javatraining.jdbc;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class CallableStatementDemo {
+	public static void main(String[] args) throws SQLException {
+		Connection connection = MyConnection.getConnection();
+		CallableStatement callableStatement = connection.prepareCall("{call firstproc(?, ?)}");
+		callableStatement.setInt(1,  1000);
+		callableStatement.setString(2,  "zzz");
+		callableStatement.execute();
+	}
+}
+
+---------------------------------------------------------------------------------
+
+DATABASE METADATA : Information about the db (like whether it supports somethings or not)
+RESULTSET METADATA : Information about the resultset (like column names, nymber of columns, type, blah blahs)
+
+---------------------------------------------------------------------------------
+//ANNOTATIONS
+
+package com.javatraining.jdbc;
+
+@interface Author {
+	String name();
+}
+
+@Author(name = "Mamta Harris") 
+
+----------------------------------------------------------------------------------
+
+
+
+
+
