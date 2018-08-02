@@ -20,6 +20,6 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     
     <!-- Mapping files -->
-    <mapping resource="com/deloitte/javatraining/entity/customer.hbm.xml"/> 
+    <mapping class="com.deloitte.javatraining.entity.Customer"/> 
 </session-factory>
 </hibernate-configuration>

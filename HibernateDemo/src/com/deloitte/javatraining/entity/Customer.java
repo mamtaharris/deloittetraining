@@ -1,15 +1,32 @@
 package com.deloitte.javatraining.entity;
 
-public class Customer {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="Cust200")
+
+public class Customer { 
+	
+	@Id
 	private int customerId;
+	
+	@Column
 	private String customerName;
+	
+	@Column
 	private String customerAddress;
-	private int billAmount;
+	
+	@Column
+	private String billAmount;
 	
 	public Customer() {
 	}
-	
-	public Customer(int customerId, String customerName, String customerAddress, int billAmount) {
+
+	public Customer(int customerId, String customerName, String customerAddress, String billAmount) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
@@ -41,11 +58,11 @@ public class Customer {
 		this.customerAddress = customerAddress;
 	}
 
-	public int getBillAmount() {
+	public String getBillAmount() {
 		return billAmount;
 	}
 
-	public void setBillAmount(int billAmount) {
+	public void setBillAmount(String billAmount) {
 		this.billAmount = billAmount;
 	}
 
@@ -53,7 +70,7 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + billAmount;
+		result = prime * result + ((billAmount == null) ? 0 : billAmount.hashCode());
 		result = prime * result + ((customerAddress == null) ? 0 : customerAddress.hashCode());
 		result = prime * result + customerId;
 		result = prime * result + ((customerName == null) ? 0 : customerName.hashCode());
@@ -69,7 +86,10 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (billAmount != other.billAmount)
+		if (billAmount == null) {
+			if (other.billAmount != null)
+				return false;
+		} else if (!billAmount.equals(other.billAmount))
 			return false;
 		if (customerAddress == null) {
 			if (other.customerAddress != null)
@@ -91,6 +111,6 @@ public class Customer {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
 				+ customerAddress + ", billAmount=" + billAmount + "]";
 	}
-
+	
 	
 }
