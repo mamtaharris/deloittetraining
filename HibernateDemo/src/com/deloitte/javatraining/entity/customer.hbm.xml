@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.deloitte.javatraining.entity.Customer" table="CustomerDelloite">
+	
+		<id name="customerId" type="int" column="CID">
+			<!-- 'assigned' means whatever id you gave. 
+			'increment' will add 1 (starting from 1) to the previous value (max one) and what you give won't matter  -->
+			<generator class="increment"/>
+		</id>
+		<property name="customerName" column="CustomerName"/>
+		<property name="customerAddress" column="CustomerAddress"/>
+		<property name="billAmount" column="BillAmount"/>
+	</class>
+</hibernate-mapping>
