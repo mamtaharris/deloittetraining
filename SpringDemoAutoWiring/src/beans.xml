@@ -6,6 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean  id="emp" class="com.Employee" autowire="byName">
+	<!-- Auto wiring can be with byName, byType or Constructor -->
 			<constructor-arg name="employeeName" value="Sakshi2.0"></constructor-arg> 
 	</bean>
 	
