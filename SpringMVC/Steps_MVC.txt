@@ -1,0 +1,68 @@
+Step 1: create a dynamic project with 2.5 facets
+Step 1: open web.xml and do the changes in web.xml 
+   <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>*.abc</url-pattern>
+    </servlet-mapping>
+
+
+Step 2: Add the jar files to web-content/lib folder
+Step 3: create a file WEB-INF/spring-servlet.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+    <context:component-scan
+        base-package="com.controller" />
+         
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+</beans>
+
+Step 4 : create package com.controller in src 
+Step 5: create a folder named pages inside WEB-INF 
+Step 6: create a class inside com.controller in src 
+
+package com.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MyController {
+
+	@RequestMapping("/Go")
+	public String pp()
+	{
+		return "mohan";
+	}
+}
+
+Step 7: create mohan.jsp inside web-content/web-inf/pages folder
+
+<html>
+<body>
+I am here is spring MVC dispatcher servlet.
+</body>
+</html>
+
+Save all the file and run
